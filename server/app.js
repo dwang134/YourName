@@ -12,7 +12,12 @@ app.use(express.urlencoded({extended: false})); //recognize inc obj as string/ar
 
 //create
 app.post('/insert', (req, res) => {
-    console.log(req.body);
+    const {name} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result= db.insertNewName(name)
+    result.then(data=> res.json({success: true})).catch(err => console.log(err));
+    // console.log(req.body);
 });
 
 //read

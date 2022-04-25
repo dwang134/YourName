@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 let instance = null;
 dotenv.config();
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
@@ -11,10 +11,10 @@ const connection = mysql.createConnection({
     port: process.env.DB_PORT
 });
 
-connection.connect((err)=> {
+db.connect((err)=> {
     if (err) throw err;
 
-    console.log('DB '+ connection.state);
+    console.log('DB '+ db.state);
 });
 
 class DbService { 
@@ -26,7 +26,7 @@ class DbService {
         try{
          const res= await new Promise((resolve, reject)=> {
              const query = "SELECT * FROM names"
-             connection.query(query, (err, result)=>{
+             db.query(query, (err, result)=>{
                  if (err) reject (new Error(err.message));
                  resolve(result);
              })
@@ -38,6 +38,26 @@ class DbService {
             console.log(err);
         }
     }
+
+    async insertNewName(name){
+        try{
+            const dateAdded= new Date();
+
+            const insertID= await new Promise((resolve, reject)=> {
+                const query = "INSERT INTO names (name, date_added) VALUES (?,?) ";
+                db.query(query, [name, dateAdded], (err, result)=>{
+                    if (err) reject (new Error(err.message));
+                    resolve(result.insertID);
+                })
+            })
+            return insertID;
+           //  console.log(res);
+
+        }catch (err){
+            console.log(err);
+        }
+    }
+
 }
 
 module.exports = DbService;

@@ -1,5 +1,31 @@
 {
+  "name": "YourName",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwang134/YourName.git"
+  },
+  "keywords": [],
+  "author": "Dylan Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dwang134/YourName/issues"
+  },
+  "homepage": "https://github.com/dwang134/YourName#readme",
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "tailwindcss": "^3.0.24"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
   }
 }

@@ -36,7 +36,12 @@ app.get('/getAll', (req, res) => {
 
 
 //update
-
+app.patch('/update', (req, res) => {
+    const {id, name } = req.body;
+    const db= dbService.getDbServiceInstance();
+    const result = db.updateNameById(id, name);
+    result.then(data=> res.json({success: data})).catch(err => console.log(err));
+})
 
 //delete
 app.delete('/delete/:id', (req, res) => {
@@ -46,6 +51,19 @@ app.delete('/delete/:id', (req, res) => {
 
     result.then(data=> res.json({success: data})).catch(err => console.log(err));
 })
+
+
+//get data by name
+app.get('/search/:name' , (req, res) => {
+    const {name} = req.params;
+    const db= dbService.getDbServiceInstance();
+    const result = db.searchByName(name);
+
+    result.then(data=> res.json({data: data})).catch(err => console.log(err));
+    
+})
+
+
 
 const PORT = process.env.PORT || 5000;
 

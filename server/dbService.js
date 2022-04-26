@@ -83,6 +83,43 @@ class DbService {
         }
         
     }
+
+    //update
+    async updateNameById(id, name){
+        try{
+            id = parseInt(id, 10);
+            console.log(id);
+            const response= await new Promise((resolve, reject)=> {
+                const query = "UPDATE names SET name = ? WHERE id= ?";
+                db.query(query, [name, id], (err, result)=>{
+                    if (err) reject (new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            return response === 1 ? true: false;
+            
+        }catch(err){
+            console.log(err);
+            return false;
+        }
+    }
+
+    //get data by id
+    async searchByName(name){
+        try{
+            const res= await new Promise((resolve, reject)=> {
+                const query = "SELECT * FROM names WHERE name= ?"
+                db.query(query, [name], (err, result)=>{
+                    if (err) reject (new Error(err.message));
+                    resolve(result);
+                })
+            })
+            return res;
+   
+           }catch (err){
+               console.log(err);
+           }
+    } 
     
 } //class ends here
 

@@ -1,16 +1,71 @@
+//READ
 document.addEventListener('DOMContentLoaded', ()=> {
     fetch('http://localhost:5000/getAll')
     .then(response=> response.json())
     .then(data=> loadHTMLTable(data['data']));
 })
 
+//click event handle
 document.querySelector('table tbody').addEventListener('click', (event)=> {
     // console.log(event.target);
     if (event.target.id == "delete-btn"){
         deleteRowById(event.target.dataset.id);
     }
+    if (event.target.id === "edit-btn"){
+        editRowById(event.target.dataset.id);
+    }
 });
 
+//SEARCH
+const searchBtn = document.querySelector('#search-btn');
+searchBtn.onclick = function(){
+    const searchValue = document.querySelector('#search-input').value;
+
+    if (!searchValue){
+        fetch('http://localhost:5000/getAll')
+        .then(response=> response.json())
+        .then(data=> loadHTMLTable(data['data']));
+    }else{
+        fetch('http://localhost:5000/search/'+ searchValue)
+        .then(response=> response.json())
+        .then(data=> loadHTMLTable(data['data']));
+    }
+}
+
+
+//UPDATE
+const editRowById= (id) => {
+    //toggle visibility
+    const updateSection = document.querySelector('#update-row');
+    updateSection.hidden = false;
+
+    document.querySelector('#update-name-input').dataset.id = id;
+}
+
+const updateBtn = document.querySelector('#update-btn');
+
+updateBtn.onclick = () => {
+    const updatedName= document.querySelector('#update-name-input');
+    fetch('http://localhost:5000/update', {
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: updatedName.dataset.id,
+            name: updatedName.value
+        })
+    })
+    .then(res=> res.json())
+    .then(data => {
+        if (data.success){
+            location.reload();
+        }
+    })
+}
+
+
+//DELETE
 const deleteRowById= (id) => {
     fetch('http://localhost:5000/delete/' + id, {
         method: 'DELETE'
@@ -23,6 +78,7 @@ const deleteRowById= (id) => {
     });
 }
 
+//CREATE
 const addBtn = document.querySelector('#add-name-btn');
 
 addBtn.onclick = ()=> {
@@ -74,7 +130,6 @@ const insertRowIntoTable = (data)=> {
         table.innerHTML = tableHTML;
     }else{
         const newRow= table.insertRow();
-        console.log(tableHTML);
         newRow.innerHTML = tableHTML;
 
     }

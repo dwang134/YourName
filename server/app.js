@@ -1,4 +1,4 @@
-//model
+//controller
 const express= require('express');
 const app = express();
 const cors = require('cors'); //allows request from our web to another web
@@ -62,8 +62,6 @@ app.get('/search/:name' , (req, res) => {
     result.then(data=> res.json({data: data})).catch(err => console.log(err));
     
 })
-
-
 
 const PORT = process.env.PORT || 5000;
 

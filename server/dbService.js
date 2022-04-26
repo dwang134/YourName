@@ -1,4 +1,4 @@
-//controller
+//model
 const mysql = require('mysql');
 const dotenv = require('dotenv');
 let instance = null;

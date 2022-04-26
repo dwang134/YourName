@@ -48,7 +48,7 @@ addBtn.onclick = ()=> {
 const insertRowIntoTable = (data)=> {
     const table = document.querySelector('table tbody');
     const isTableData= table.querySelector('.no-data');
-    let tableHTML= "<tr>"
+    let tableHTML= "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
 
     for (var key in data){
         if (data.hasOwnProperty(key)){
@@ -62,17 +62,19 @@ const insertRowIntoTable = (data)=> {
             }
         }    
     }
-    const keys= Object.keys(data); //convert obj to key array
-    console.log(keys);
+
+    // const keys= Object.keys(data); //convert obj to key array
+    // console.log(keys);
 
     tableHTML+= `<td class= 'px-6 py-4 text-right'><a href= '#' id= 'edit-btn' class= 'font-medium text-blue-600 dark:text-blue-500' data-id=${data.id}>Edit</a></td>`
-    tableHTML+= `<td class= 'px-6 py-4 text-right'><a href= '#' id= 'delete-btn' 'class= 'font-medium text-blue-600 dark:text-blue-500' data-id=${data.id}>Delete</a></td>`
+    tableHTML+= `<td class= 'px-6 py-4 text-right'><a href= '#' id= 'delete-btn' class= 'font-medium text-blue-600 dark:text-blue-500' data-id=${data.id}>Delete</a></td>`
     tableHTML+= "</tr>"
 
     if (isTableData){
         table.innerHTML = tableHTML;
     }else{
         const newRow= table.insertRow();
+        console.log(tableHTML);
         newRow.innerHTML = tableHTML;
 
     }
@@ -84,12 +86,11 @@ const loadHTMLTable = (data)=> {
     if (data.length=== 0){
         console.log('no data');
         table.innerHTML =
-          "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'><td class='no-data text-black font-medium text-center' colspan='5'>No Data</td></tr>";
-    }
-
+        "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'><td class='no-data text-white font-medium text-center' colspan='5'>No Data</td></tr>";
+    }else{
     let tableHTML = "";
     data.forEach(function ({id, name, date_added}){
-        tableHTML+= "<tr>";
+        tableHTML+= "<tr class='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>";
         tableHTML+= `<th class= 'px-6 py-4'>${id}</th>`
         tableHTML+= `<td class= 'px-6 py-4'>${name}</td>`
         tableHTML+= `<td class= 'px-6 py-4'>${new Date(date_added).toLocaleString()}</td>`
@@ -98,4 +99,5 @@ const loadHTMLTable = (data)=> {
         tableHTML+= "</tr>";
     });
     table.innerHTML = tableHTML;
+    }   
 }

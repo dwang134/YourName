@@ -1,6 +1,6 @@
 //READ
 document.addEventListener('DOMContentLoaded', ()=> {
-    fetch('http://localhost:5000/getAll')
+    fetch('https://yourname-mysql.herokuapp.com/getAll')
     .then(response=> response.json())
     .then(data=> loadHTMLTable(data['data']));
 })
@@ -22,11 +22,11 @@ searchBtn.onclick = function(){
     const searchValue = document.querySelector('#search-input').value;
 
     if (!searchValue){
-        fetch('http://localhost:5000/getAll')
+        fetch('https://yourname-mysql.herokuapp.com/getAll')
         .then(response=> response.json())
         .then(data=> loadHTMLTable(data['data']));
     }else{
-        fetch('http://localhost:5000/search/'+ searchValue)
+        fetch('https://yourname-mysql.herokuapp.com/search/'+ searchValue)
         .then(response=> response.json())
         .then(data=> loadHTMLTable(data['data']));
     }
@@ -46,7 +46,7 @@ const updateBtn = document.querySelector('#update-btn');
 
 updateBtn.onclick = () => {
     const updatedName= document.querySelector('#update-name-input');
-    fetch('http://localhost:5000/update', {
+    fetch('https://yourname-mysql.herokuapp.com/update', {
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json'
@@ -67,7 +67,7 @@ updateBtn.onclick = () => {
 
 //DELETE
 const deleteRowById= (id) => {
-    fetch('http://localhost:5000/delete/' + id, {
+    fetch('https://yourname-mysql.herokuapp.com/delete/' + id, {
         method: 'DELETE'
     })
     .then(res=> res.json())
@@ -89,7 +89,7 @@ addBtn.onclick = ()=> {
     }else{
             //clear
     nameInput.value = "";
-    fetch('http://localhost:5000/insert',{
+    fetch('https://yourname-mysql.herokuapp.com/insert',{
         headers: {
             'Content-Type': 'application/json'
         },

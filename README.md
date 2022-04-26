@@ -1,2 +1,2 @@
 # YourName
-node express noSQL app
+node express mySQL app

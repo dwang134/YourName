@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../dist/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <title>TellMe</title>
+</head>
+<body>
+    <main class= "container mx-auto w-1/2 pt-40">
+        <div class=" flex flex-col justify-center items-center gap-y-10">
+
+            <div class= "text-center text-8xl text-black archivo-black">YourName.</div> 
+            <!-- Add Name -->
+    
+            <div class= "flex flex-col gap-y-10 justify-center mt-20">
+                <div class= "flex justify-center align-center gap-x-2">
+                    <label for= "name" class= "font-semibold text-lg pt-0.5" >Name: </label>
+                    <input id= "name-input" type="text" class= "outline-0 border-b-2 border-indigo-500 hover:border-green-500 w-60">
+                    <button id= 'add-name-btn' class= "bg-indigo-500 text-white font-medium py-1 px-3 rounded w-30">Add Name</button>
+                </div>
+                <!-- Search -->
+                <div class= " flex justify-end gap-x-1">
+                    <input type="text" class= "outline-0 border-b-2 border-indigo-500 hover:border-green-500 w-60">
+                    <button class= "bg-indigo-500 text-white font-medium py-1 px-3 rounded w-30">Search User</button>
+                </div>
+            </div>
+        
+        <!-- Table -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="table">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                ID
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Date Added
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Edit
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Delete
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+    
+    
+        </div> <!--flexbox-->
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>

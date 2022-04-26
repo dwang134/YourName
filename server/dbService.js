@@ -1,3 +1,4 @@
+//controller
 const mysql = require('mysql');
 const dotenv = require('dotenv');
 let instance = null;
@@ -43,14 +44,19 @@ class DbService {
         try{
             const dateAdded= new Date();
 
-            const insertID= await new Promise((resolve, reject)=> {
-                const query = "INSERT INTO names (name, date_added) VALUES (?,?) ";
+            const insertId= await new Promise((resolve, reject)=> {
+                const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
                 db.query(query, [name, dateAdded], (err, result)=>{
                     if (err) reject (new Error(err.message));
-                    resolve(result.insertID);
+                    resolve(result.insertId);
                 })
-            })
-            return insertID;
+            });
+
+            return {
+                id: insertId,
+                name: name,
+                dateAdded: dateAdded
+            };
            //  console.log(res);
 
         }catch (err){
@@ -58,6 +64,26 @@ class DbService {
         }
     }
 
-}
+    async deleteRowById(id){
+
+        try{
+            id = parseInt(id, 10);
+            const response= await new Promise((resolve, reject)=> {
+                const query = "DELETE FROM names WHERE id= ?";
+                db.query(query, [id], (err, result)=>{
+                    if (err) reject (new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            return response === 1 ? true : false;
+            
+        }catch(err){
+            console.log(err);
+            return false;
+        }
+        
+    }
+    
+} //class ends here
 
 module.exports = DbService;

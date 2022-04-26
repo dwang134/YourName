@@ -1,3 +1,4 @@
+//model
 const express= require('express');
 const app = express();
 const cors = require('cors'); //allows request from our web to another web
@@ -16,7 +17,7 @@ app.post('/insert', (req, res) => {
     const db = dbService.getDbServiceInstance();
 
     const result= db.insertNewName(name)
-    result.then(data=> res.json({success: true})).catch(err => console.log(err));
+    result.then(data=> res.json({data: data})).catch(err => console.log(err));
     // console.log(req.body);
 });
 
@@ -38,7 +39,13 @@ app.get('/getAll', (req, res) => {
 
 
 //delete
+app.delete('/delete/:id', (req, res) => {
+    const {id} = req.params;
+    const db = dbService.getDbServiceInstance();
+    const result = db.deleteRowById(id);
 
+    result.then(data=> res.json({success: data})).catch(err => console.log(err));
+})
 
 const PORT = process.env.PORT || 5000;
 

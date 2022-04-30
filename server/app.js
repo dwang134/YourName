@@ -7,7 +7,9 @@ dotenv.config();
 
 const dbService = require('./dbService')
 
-app.use(cors()); //not block incoming api call and send it to backend
+app.use(cors({
+    origin: 'https://yourname-c4674.web.app'
+})); //not block incoming api call and send it to backend
 app.use(express.json()); //send json data for POST/PUT later
 app.use(express.urlencoded({extended: false})); //recognize inc obj as string/array
 
@@ -63,8 +65,8 @@ app.get('/search/:name' , (req, res) => {
     
 })
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`Server is listening...`);
 })

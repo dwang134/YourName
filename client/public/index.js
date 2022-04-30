@@ -26,7 +26,7 @@ searchBtn.onclick = function(){
         .then(response=> response.json())
         .then(data=> loadHTMLTable(data['data']));
     }else{
-        fetch('https://yourname-mysql.herokuapp.com/search/'+ searchValue)
+        fetch('https://yourname-mysql.herokuapp.com/search'+ searchValue)
         .then(response=> response.json())
         .then(data=> loadHTMLTable(data['data']));
     }
@@ -67,7 +67,7 @@ updateBtn.onclick = () => {
 
 //DELETE
 const deleteRowById= (id) => {
-    fetch('https://yourname-mysql.herokuapp.com/delete/' + id, {
+    fetch('https://yourname-mysql.herokuapp.com/delete' + id, {
         method: 'DELETE'
     })
     .then(res=> res.json())

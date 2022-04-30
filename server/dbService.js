@@ -4,19 +4,29 @@ const dotenv = require('dotenv');
 let instance = null;
 dotenv.config();
 
-const db = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DB_PORT
-});
+// const db = mysql.createConnection({
+//     connectionLimit: 10,
+//     host: process.env.HOST,
+//     user: process.env.USER,
+//     password: process.env.PASSWORD,
+//     database: process.env.DATABASE,
+//     // port: process.env.DB_PORT
+// });
 
-db.connect((err)=> {
-    if (err) throw err;
+var pool  = mysql.createPool({
+    connectionLimit : 10,
+    host            : process.env.HOST,
+    user            : process.env.USER,
+    password        : process.env.PASSWORD,
+    database        : process.env.DATABASE
+  });
+  
 
-    console.log('DB '+ db.state);
-});
+// db.connect((err)=> {
+//     if (err) throw err;
+
+//     console.log('DB '+ db.state);
+// });
 
 class DbService { 
     static getDbServiceInstance(){
@@ -27,7 +37,7 @@ class DbService {
         try{
          const res= await new Promise((resolve, reject)=> {
              const query = "SELECT * FROM names"
-             db.query(query, (err, result)=>{
+             pool.query(query, (err, result)=>{
                  if (err) reject (new Error(err.message));
                  resolve(result);
              })
@@ -46,7 +56,7 @@ class DbService {
 
             const insertId= await new Promise((resolve, reject)=> {
                 const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
-                db.query(query, [name, dateAdded], (err, result)=>{
+                pool.query(query, [name, dateAdded], (err, result)=>{
                     if (err) reject (new Error(err.message));
                     resolve(result.insertId);
                 })
@@ -70,7 +80,7 @@ class DbService {
             id = parseInt(id, 10);
             const response= await new Promise((resolve, reject)=> {
                 const query = "DELETE FROM names WHERE id= ?";
-                db.query(query, [id], (err, result)=>{
+                pool.query(query, [id], (err, result)=>{
                     if (err) reject (new Error(err.message));
                     resolve(result.affectedRows);
                 })
@@ -91,7 +101,7 @@ class DbService {
             console.log(id);
             const response= await new Promise((resolve, reject)=> {
                 const query = "UPDATE names SET name = ? WHERE id= ?";
-                db.query(query, [name, id], (err, result)=>{
+                pool.query(query, [name, id], (err, result)=>{
                     if (err) reject (new Error(err.message));
                     resolve(result.affectedRows);
                 })
@@ -109,7 +119,7 @@ class DbService {
         try{
             const res= await new Promise((resolve, reject)=> {
                 const query = "SELECT * FROM names WHERE name= ?"
-                db.query(query, [name], (err, result)=>{
+                pool.query(query, [name], (err, result)=>{
                     if (err) reject (new Error(err.message));
                     resolve(result);
                 })
